@@ -1,3 +1,13 @@
+# `pdflatex` generated files
 *.log
 *.aux
 *.pdf
+
+# LaTeX Workshop generated files
+*.aux
+*.pdf
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
