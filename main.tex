@@ -7,6 +7,8 @@
 %\usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 
+\usepackage{amsmath}
+\usepackage{physics}
 
 \sloppy
 
@@ -34,19 +36,23 @@
 
 % TODO: Talk about sufficient and necessary explanations
 
-Suppose we have a neural network classifier with inputs $x_1$, $x_2$, $x_3$, $x_4$, $x_5$, and possible outputs $C_1$, $C_2$, $C_3$. Suppose, after passing $x_1 = 0.89$, $x_2 = -1.07$, $x_3 = 0.42$, $x_4 = -0.61$, $x_5 = -0.67$ to the classifier, we get a minimal explanation as follows:
+Suppose we have a neural network classifier with inputs $x_1$, $x_2$, $x_3$, $x_4$, $x_5$, and possible outputs $C_1$, $C_2$, $C_3$.
+
+Suppose, after passing $\vb{x} = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \end{bmatrix} = \begin{bmatrix} 0.89 \\ -1.07 \\ 0.42 \\ -0.61 \\ -0.67 \end{bmatrix}$ to the classifier, we get the class $C_2$, with minimal explanation as follows:
 
 \[
 \{x_1 = 0.89, x_3 = 0.42, x_4 = -0.61\}
 \]
 
-We are now interested in discovering which range of values for the variables $x_1$, $x_3$ and $x_4$ that still guarantees the output to be $C_2$. The idea is to see if the problem is solvable when walking at steps of $\epsilon$ at the vicinity of the point. To achieve this, we treat each constraint of type $x = c$ as $c \le x \le c$, and check if the problem is solvable, after each increment of size $\epsilon$, one side at time. We expect the improved explanation to be a set of constraints that describe the range of each variable in the minimal explanation, such as $c - k_1 \cdot \epsilon \le x \le c + k_2 \cdot \epsilon$, where $k$ is the number of steps taken. In this case, we would do
+In this case, $x_2$ and $x_5$ are not part of the minimal explanation, meaning they can have any value and the output will still be $C_2$, as long as $x_1 = 0.89$, $x_3 = 0.42$, $x_4 = -0.61$ still holds.
 
-\[
-\{x_1 \ge 0.89, x_1 \le 0.89, x_3 \ge 0.42, x_3 \le 0.42, x_4 \ge -0.61, x_4 \le -0.61\}
-\]
+We are now interested in discovering which range of values for the variables $x_1$, $x_3$ and $x_4$ that still guarantees the output to be $C_2$, i.e. we are insterested in improving the minimal explanation to consist of constraints of type $c_{i-} \le x_i \le c_{i+}$.
 
-Then, for each of these constraints, we try to solve\dots
+The approach is to see if the problem is solvable when walking at steps of $\epsilon$ at the vicinity of the point.
+To achieve this, we initially treat each constraint of type $x = c$ as $c \le x \le c$, and check if the problem is solvable, after each increment of size $\epsilon$ on each side, one side at time.
+We expect the improved explanation to be a set of constraints that describe the range of each variable in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_-$ is the number of steps taken to the left, and $k_+$ is the number of steps taken to the right.
+
+% TODO: Talk about gaps in the interval
 
 
 \section{Experiments}
