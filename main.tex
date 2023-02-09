@@ -9,6 +9,8 @@
 
 \usepackage{amsmath}
 \usepackage{physics}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
 
 \sloppy
 
@@ -41,7 +43,7 @@ Suppose we have a neural network classifier with inputs $x_1$, $x_2$, $x_3$, $x_
 Suppose, after passing $\vb{x} = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \end{bmatrix} = \begin{bmatrix} 0.89 \\ -1.07 \\ 0.42 \\ -0.61 \\ -0.67 \end{bmatrix}$ to the classifier, we get the class $C_2$, with minimal explanation as follows:
 
 \[
-\{x_1 = 0.89, x_3 = 0.42, x_4 = -0.61\}
+M = \{x_1 = 0.89, x_3 = 0.42, x_4 = -0.61\}
 \]
 
 In this case, $x_2$ and $x_5$ are not part of the minimal explanation, meaning they can have any value and the output will still be $C_2$, as long as $x_1 = 0.89$, $x_3 = 0.42$, $x_4 = -0.61$ still holds.
@@ -51,6 +53,27 @@ We are now interested in discovering which range of values for the variables $x_
 The approach is to see if the problem is solvable when walking at steps of $\epsilon$ at the vicinity of the point.
 To achieve this, we initially treat each constraint of type $x = c$ as $c \le x \le c$, and check if the problem is solvable, after each increment of size $\epsilon$ on each side, one side at time.
 We expect the improved explanation to be a set of constraints that describe the range of each variable in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_-$ is the number of steps taken to the left, and $k_+$ is the number of steps taken to the right.
+
+\begin{algorithm}
+	\caption{Improve the minimal explanation by steps}
+	\begin{algorithmic}
+		\Procedure{GetImprovedExplanation} {$M, F, C, \epsilon$}
+			\ForAll {$c \in M$}
+				\While {$M \cup F \models C$}
+					\State {$M' \gets M$}
+					\State {$c.rhs \gets c.rhs + \epsilon$}
+				\EndWhile
+				\State {$M \gets M'$}
+
+				\While {$M \cup F \models C$}
+					\State {$M' \gets M$}
+					\State {$c.lhs \gets c.lhs - \epsilon$}
+				\EndWhile
+				\State {$M \gets M'$}
+			\EndFor
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
 % TODO: Talk about gaps in the interval
 
