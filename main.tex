@@ -48,11 +48,17 @@ M = \{x_1 = 0.89, x_3 = 0.42, x_4 = -0.61\}
 
 In this case, $x_2$ and $x_5$ are not part of the minimal explanation, meaning they can have any value and the output will still be $C_2$, as long as $x_1 = 0.89$, $x_3 = 0.42$, $x_4 = -0.61$ still holds.
 
-We are now interested in discovering which range of values for the variables $x_1$, $x_3$ and $x_4$ that still guarantees the output to be $C_2$, i.e. we are insterested in improving the minimal explanation to consist of constraints of type $c_{i-} \le x_i \le c_{i+}$.
+We are now interested in discovering which range of values for the features $x_1$, $x_3$ and $x_4$ that still guarantees the output to be $C_2$, i.e. we are insterested in improving the minimal explanation to consist of constraints of type $c_{i-} \le x_i \le c_{i+}$.
 
-The approach is to see if the problem is solvable when walking at steps of $\epsilon$ at the vicinity of the point.
-To achieve this, we initially treat each constraint of type $x = c$ as $c \le x \le c$, and check if the problem is solvable, after each increment of size $\epsilon$ on each side, one side at time.
-We expect the improved explanation to be a set of constraints that describe the range of each variable in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_-$ is the number of steps taken to the left, and $k_+$ is the number of steps taken to the right.
+The approach is to see if the output is still the same after walking at steps of $\epsilon$ at the vicinity of the point.
+To achieve this, we iterate over $M$, treating the current constraint of type $x = c$ as $c \le x \le c$.
+Then we update that constraint to be $c \le x \le c + \epsilon$, and check if this updated $M$ still guarantees the class $C_2$.
+We keep incrementing $\epsilon$ to the right hand side of the constraint until we cannot guarantee the output class to remain the same, in which case the previous value is the upper end of the interval for feature $x$.
+After that, we do the same for the other side of the constraint, but decrementing at steps of $\epsilon$, until we find the lower end for $x$.
+In the case no steps can be taken at all, we keep the constraint as $x = c$.
+In the case we step further than a bound of $x$, we cap the range at that bound.
+
+We expect the improved explanation to be a set of constraints that describe the range of each feature in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_{-}$ is the number of steps taken to the left, and $k_{+}$ is the number of steps taken to the right.
 
 \begin{algorithm}
 	\caption{Improve the minimal explanation by steps}
