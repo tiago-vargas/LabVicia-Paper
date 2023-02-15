@@ -40,7 +40,7 @@
 
 Suppose we have a neural network classifier with inputs $x_1$, $x_2$, $x_3$, $x_4$, $x_5$, and possible outputs $C_1$, $C_2$, $C_3$.
 
-Suppose, after passing $\vb{x} = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \end{bmatrix} = \begin{bmatrix} 0.89 \\ -1.07 \\ 0.42 \\ -0.61 \\ -0.67 \end{bmatrix}$ to the classifier, we get the class $C_2$, with minimal explanation as follows:
+Suppose, after passing $\vb{x} = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \end{bmatrix} = \begin{bmatrix} 0.89 \\ -1.07 \\ 0.42 \\ -0.61 \\ -0.67 \end{bmatrix}$ to the classifier, we get the class $C_2$ as output, with minimal explanation $M$ as follows:
 
 \[
 M = \{x_1 = 0.89, x_3 = 0.42, x_4 = -0.61\}
@@ -57,9 +57,16 @@ We keep incrementing $\epsilon$ to the right hand side of the constraint until w
 After that, we do the same for the other side of the constraint, but decrementing at steps of $\epsilon$, until we find the lower end for $x$.
 In the case no steps can be taken at all, we keep the constraint as $x = c$.
 In the case we step further than a bound of $x$, we cap the range at that bound.
+% TODO: [on last sentence] Explain better that we cap the range **after** checking the output out
 
 We expect the improved explanation to be a set of constraints that describe the range of each feature in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_{-}$ is the number of steps taken to the left, and $k_{+}$ is the number of steps taken to the right.
 
+% TODO: Add example: improve $M$
+
+We provide an algorithm for improving a minimal explanation bellow. The line $M' \gets M$ means that $M'$ is a \emph{deep copy} of $M$.
+% TODO: Explain the notation $M \cup F \models C$
+
+% TODO: Describe parameters
 \begin{algorithm}
 	\caption{Improve the minimal explanation by steps}
 	\begin{algorithmic}
@@ -70,13 +77,14 @@ We expect the improved explanation to be a set of constraints that describe the 
 					\State {$c \texttt{.right\_hand\_side} \gets c \texttt{.right\_hand\_side} - \epsilon$}
 				\EndWhile
 				\State {$M \gets M'$}
-
+				\\
 				\While {$M \cup F \models C$}
 					\State {$M' \gets M$}
 					\State {$c \texttt{.left\_hand\_side} \gets c \texttt{.left\_hand\_side} - \epsilon$}
 				\EndWhile
 				\State {$M \gets M'$}
 			\EndFor
+			\\
 			\State {\textbf{return} $M$}
 		\EndProcedure
 	\end{algorithmic}
@@ -92,6 +100,8 @@ We expect the improved explanation to be a set of constraints that describe the 
 % TODO: Talk about the execution time
 
 % TODO: Talk about the correctness
+
+% TODO: Put the example of the sliced square (2 inputs; 2 classes; one line dividing the square, defining the class boundaries; select a point and walk until you hit the line and notice how first walking vertically or horizontally change the results)
 
 
 \section{Conclusion}
