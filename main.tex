@@ -62,9 +62,6 @@ In the case we step further than a bound of $x$, we cap the range at that bound.
 We expect the improved explanation to be a set of constraints that describe the range of each feature in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_{-}$ is the number of steps taken to the left, and $k_{+}$ is the number of steps taken to the right.
 
 We provide an algorithm for improving a minimal explanation bellow. The line $M' \gets M$ means that $M'$ is a \emph{deep copy} of $M$.
-% TODO: Explain the notation $M \cup F \models C$
-
-% TODO: Describe parameters
 
 In the context of the previous example, suppose our aim is to, after arbitrarily setting $\epsilon = 0.1$, we attempt to stretch the interval for $x_1$, first finding the upper end $0.92$:
 
@@ -106,18 +103,22 @@ M = \{0.14 \le x_1 \le 0.92,
       x_4 = -0.61\}
 \]
 
+% TODO: Explain the notation $M \cup F \models O$
+
+% TODO: Describe parameters
+
 \begin{algorithm}
 	\caption{Improve the minimal explanation by steps}
 	\begin{algorithmic}
-		\Procedure{GetImprovedExplanation} {$M, F, C, \epsilon$}
+		\Procedure{GetImprovedExplanation} {$M, F, O, \epsilon$}
 			\ForAll {$c \in M$}
-				\While {$M \cup F \models C$}
+				\While {$M \cup F \models O$}
 					\State {$M' \gets M$}
 					\State {$c \texttt{.right\_hand\_side} \gets c \texttt{.right\_hand\_side} - \epsilon$}
 				\EndWhile
 				\State {$M \gets M'$}
 				\\
-				\While {$M \cup F \models C$}
+				\While {$M \cup F \models O$}
 					\State {$M' \gets M$}
 					\State {$c \texttt{.left\_hand\_side} \gets c \texttt{.left\_hand\_side} - \epsilon$}
 				\EndWhile
