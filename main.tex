@@ -61,12 +61,51 @@ In the case we step further than a bound of $x$, we cap the range at that bound.
 
 We expect the improved explanation to be a set of constraints that describe the range of each feature in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_{-}$ is the number of steps taken to the left, and $k_{+}$ is the number of steps taken to the right.
 
-% TODO: Add example: improve $M$
-
 We provide an algorithm for improving a minimal explanation bellow. The line $M' \gets M$ means that $M'$ is a \emph{deep copy} of $M$.
 % TODO: Explain the notation $M \cup F \models C$
 
 % TODO: Describe parameters
+
+In the context of the previous example, suppose our aim is to, after arbitrarily setting $\epsilon = 0.1$, we attempt to stretch the interval for $x_1$, first finding the upper end $0.92$:
+
+\[
+M = \{0.89 \le x_1 \le 0.92,
+      x_3 = 0.42,
+      x_4 = -0.61\}
+\]
+
+Then we stretch the lower end of the interval, finding $0.14$:
+
+\[
+M = \{0.14 \le x_1 \le 0.92,
+      x_3 = 0.42,
+      x_4 = -0.61\}
+\]
+
+Having found the range for the input $x_1$, we move on to $x_3$, where we can't step to the right:
+
+\[
+M = \{0.14 \le x_1 \le 0.92,
+      0.42 \le x_3 \le 0.42,
+      x_4 = -0.61\}
+\]
+
+Then we step to the left and find its lower end to be -0.51:
+
+\[
+M = \{0.14 \le x_1 \le 0.92,
+      -0.51 \le x_3 \le 0.42,
+      x_4 = -0.61\}
+\]
+
+And finally, we move to $x_4$, where we can't step at all:
+
+\[
+M = \{0.14 \le x_1 \le 0.92,
+      -0.51 \le x_3 \le 0.42,
+      x_4 = -0.61\}
+\]
+
 \begin{algorithm}
 	\caption{Improve the minimal explanation by steps}
 	\begin{algorithmic}
