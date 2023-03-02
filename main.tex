@@ -32,23 +32,23 @@
 \section{Introduction}
 % TODO: Contextualize: talk about how machine learning models are being used as black box models, but justifications/reasons would be helpful.
 
-Neural networks are a widely used in many applications to try to ...
+% Neural networks are widely used in many applications to try to ...
 % Citation
 
 These models are usually black-box models, meaning they just output a prediction, given inputs, but do not explain how they come to a prediction.
-This is problematic if the model makes a prediction that goes against what would be predicted by experts, because we do not know if the model considered something the experts did not, or the other way around.
+This is problematic if the model makes a prediction that goes against what would be predicted by experts because we do not know if the model considered something the experts did not or the other way around.
 As a consequence, if it was a high-stake prediction, we do not know who to trust.
-If the model was able to explain how it came to that prediction, the experts could reason through it and decide whether to accept it or to reject it.
+If the model was able to explain how it came to that prediction, the experts could reason through it and decide whether to accept it or reject it.
 This is the motivation for developing explainers for neural networks.
 
-% QUESTION: Give an example of high-stake prediction?
+% QUESTION: Should I give an example of high-stake prediction?
 
 % An explanation...
 
-There are neural network explainers work with the concept of \emph{minimal explanation}, which is a set of which features contributed to the prediction, along with their values.
+There are neural network explainers that work with the concept of \emph{minimal explanation}, which is a set of which features that contributed to the prediction, along with their values.
 We attempt to improve minimal explanations by identifying the \emph{range} of values a feature can have, instead of the just value it assumed in the input.
 
-% TODO: Talk about logic based explainers
+% TODO: Talk about logic-based explainers
 
 Most approaches for obtaining neural network explanations are based on heuristic methods, thus they do not guarantee correctness.
 Well known examples are LIME \cite{ribeiro2016should}, Anchors \cite{Ribeiro_Singh_Guestrin_2018} and SHAP \cite{lundberg2017unified}.
@@ -63,16 +63,16 @@ These heuristic approaches do not consider all feature space. Therefore explanat
 % TODO: Talk about logical consequences (mention proof by contradiction on outputting the class)
 
 % TODO: Talk about how to model a minimal explanation from a dataset
-A datset is a collection of features and their repective values.
+A dataset is a collection of features and their respective values.
 We represent a dataset by a set of constraints of type $x_i = c_i$, to indicate that feature $x_i$ has value $c_i$.
-% QUESTION: Is is really a set of constraints?
+% QUESTION: Is it really a set of constraints?
 
 % TODO: Talk about neural network notations
 
 
 \section{Improving Minimal Explanations}
 
-% TODO: Talk about how to improve an explanation given an minimal explanation
+% TODO: Talk about how to improve an explanation given a minimal explanation
 
 % TODO: Talk about sufficient and necessary explanations
 
@@ -86,22 +86,23 @@ M = \{x_1 = 0.89, x_3 = 0.42, x_4 = -0.61\}
 
 In this case, $x_2$ and $x_5$ are not part of the minimal explanation, meaning they can have any value and the output will still be $C_2$, as long as $x_1 = 0.89$, $x_3 = 0.42$, $x_4 = -0.61$ still holds.
 
-We are now interested in discovering which range of values for the features $x_1$, $x_3$ and $x_4$ that still guarantees the output to be $C_2$, i.e. we are insterested in improving the minimal explanation to consist of constraints of type $c_{i-} \le x_i \le c_{i+}$.
+We are now interested in discovering which range of values for the features $x_1$, $x_3$ and $x_4$ still guarantees the output to be $C_2$, i.e. we are interested in improving the minimal explanation to consist of constraints of type $c_{i-} \le x_i \le c_{i+}$.
 
 The approach is to see if the output is still the same after walking at steps of $\epsilon$ at the vicinity of the point.
 To achieve this, we iterate over $M$, treating the current constraint of type $x = c$ as $c \le x \le c$.
 Then we update that constraint to be $c \le x \le c + \epsilon$, and check if this updated $M$ still guarantees the class $C_2$.
-We keep incrementing $\epsilon$ to the right hand side of the constraint until we cannot guarantee the output class to remain the same, in which case the previous value is the upper end of the interval for feature $x$.
+We keep incrementing $\epsilon$ to the right-hand side of the constraint until we cannot guarantee the output class to remain the same, in which case the previous value is the upper end of the interval for feature $x$.
 After that, we do the same for the other side of the constraint, but decrementing at steps of $\epsilon$, until we find the lower end for $x$.
 In the case no steps can be taken at all, we keep the constraint as $x = c$.
 In the case we step further than a bound of $x$, we cap the range at that bound.
-% TODO: [on last sentence] Explain better that we cap the range **after** checking the output out
+% TODO: [on the last sentence] Explain better that we cap the range **after** checking the output out
 
 We expect the improved explanation to be a set of constraints that describe the range of each feature in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_{-}$ is the number of steps taken to the left, and $k_{+}$ is the number of steps taken to the right.
 
-We provide an algorithm for improving a minimal explanation bellow. The line $M' \gets M$ means that $M'$ is a \emph{deep copy} of $M$.
+We provide an algorithm for improving a minimal explanation below. The line $M' \gets M$ means that $M'$ is a \emph{deep copy} of $M$.
 
-In the context of the previous example, suppose our aim is to, after arbitrarily setting $\epsilon = 0.1$, we attempt to stretch the interval for $x_1$, first finding the upper end $0.92$:
+In the context of the previous example, suppose we aim to stretch the interval for $x_1$, first finding the upper end $0.92$, after arbitrarily setting $\epsilon = 0.1$:
+% _For_ $x4 or _of_ $x$?
 
 \[
 M = \{0.89 \le x_1 \le 0.92,
@@ -174,7 +175,7 @@ M = \{0.14 \le x_1 \le 0.92,
 
 % TODO: Talk about gaps in the interval
 
-% TODO: Put the example of the sliced square (2 inputs; 2 classes; one line dividing the square, defining the class boundaries; select a point and walk until you hit the line and notice how first walking vertically or horizontally change the results)
+% TODO: Put the example of the sliced square (2 inputs; 2 classes; one line dividing the square, defining the class boundaries; select a point and walk until you hit the line and notice how first walking vertically or horizontally changes the results)
 
 \begin{tikzpicture}[scale=5]
 	\draw[black, thick, ->] (0, -0.1) -- (0, 1.4);  % y axis
@@ -191,7 +192,7 @@ M = \{0.14 \le x_1 \le 0.92,
 
 \end{tikzpicture}
 
-% TODO: Put an alternative algorithm to do 1 step per variable, as opposed to discovering the range for 1 variable then moving to the next
+% TODO: Put an alternative algorithm to do 1 step per variable, as opposed to discovering the range for 1 variable and then moving to the next one
 
 
 \section{Experiments}
