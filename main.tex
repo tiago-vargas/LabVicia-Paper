@@ -50,7 +50,11 @@ We attempt to improve minimal explanations by identifying the \emph{range} of va
 
 % TODO: Talk about logic based explainers
 
-% TODO: Talk about that some attempts to do this are heuristics, and therefore could be incorrect
+Most approaches for obtaining neural network explanations are based on heuristic methods, thus they do not guarantee correctness.
+Well known examples are LIME \cite{ribeiro2016should}, Anchors \cite{Ribeiro_Singh_Guestrin_2018} and SHAP \cite{lundberg2017unified}.
+These heuristic approaches do not consider all feature space. Therefore explanations provided by these methods may be incorrect, i.e. there may be inputs for which the classification and the explainer diverge.
+% Feature space | input space | [possible] inputs
+
 
 \section{Preliminaries}
 
