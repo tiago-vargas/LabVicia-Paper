@@ -11,3 +11,6 @@
 *.fdb_latexmk
 *.fls
 *.synctex.gz
+
+# Visual Studio Code configuration files
+.vscode/
