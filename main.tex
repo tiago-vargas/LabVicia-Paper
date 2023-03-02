@@ -29,8 +29,27 @@
 \end{abstract}
 
 \section{Introduction}
-% TODO: Contextualize: talk about how machine learning models are being used as black box models, but justifications/reasons would be helpful. Talk about some attempts to do this are heuristics, and therefore could be incorrect
+% TODO: Contextualize: talk about how machine learning models are being used as black box models, but justifications/reasons would be helpful.
 
+Neural networks are a widely used in many applications to try to ...
+% Citation
+
+These models are usually black-box models, meaning they just output a prediction, given inputs, but do not explain how they come to a prediction.
+This is problematic if the model makes a prediction that goes against what would be predicted by experts, because we do not know if the model considered something the experts did not, or the other way around.
+As a consequence, if it was a high-stake prediction, we do not know who to trust.
+If the model was able to explain how it came to that prediction, the experts could reason through it and decide whether to accept it or to reject it.
+This is the motivation for developing explainers for neural networks.
+
+% QUESTION: Give an example of high-stake prediction?
+
+% An explanation...
+
+There are neural network explainers work with the concept of \emph{minimal explanation}, which is a set of which features contributed to the prediction, along with their values.
+We attempt to improve minimal explanations by identifying the \emph{range} of values a feature can have, instead of the just value it assumed in the input.
+
+% TODO: Talk about logic based explainers
+
+% TODO: Talk about that some attempts to do this are heuristics, and therefore could be incorrect
 
 \section{Preliminaries}
 
