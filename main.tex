@@ -11,6 +11,7 @@
 \usepackage{physics}
 \usepackage{algpseudocode}
 \usepackage{algorithm}
+\usepackage{tikz}
 
 \sloppy
 
@@ -170,6 +171,21 @@ M = \{0.14 \le x_1 \le 0.92,
 % TODO: Talk about gaps in the interval
 
 % TODO: Put the example of the sliced square (2 inputs; 2 classes; one line dividing the square, defining the class boundaries; select a point and walk until you hit the line and notice how first walking vertically or horizontally change the results)
+
+\begin{tikzpicture}[scale=5]
+	\draw[black, thick, ->] (0, -0.1) -- (0, 1.4);  % y axis
+	\draw[black, thick, ->] (-0.1, 0) -- (1.2, 0);  % x axis
+
+	\filldraw[draw=black!75, fill=gray!50, thick] (0, 0) rectangle (1, 1);
+
+	\draw[black, thick] (-0.1, 1.5) -- (0.75, -0.1);  % Boundary
+
+	\fill[opacity=0.25, color=orange] (-0.1, -0.1) -- (-0.1, 1.3) -- (0, 1.3) -- (0.75, -0.1) -- cycle;
+	\fill[opacity=0.25, color=blue] (0, 1.3) -- (0.75, -0.1) -- (1.1, -0.1) --  (1.1, 1.3) -- cycle;
+
+	\filldraw[black!80] (0.8, 0.8) circle (0.5pt);
+
+\end{tikzpicture}
 
 % TODO: Put an alternative algorithm to do 1 step per variable, as opposed to discovering the range for 1 variable then moving to the next
 
