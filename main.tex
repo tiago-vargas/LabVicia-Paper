@@ -13,6 +13,8 @@
 \usepackage{algorithm}
 \usepackage{tikz}
 
+\usetikzlibrary{positioning, matrix}
+
 \sloppy
 
 \title{On improving minimal explanations for neural networks using mixed integer linear programming}
@@ -58,7 +60,7 @@ These heuristic approaches do not consider all feature space. Therefore explanat
 
 \section{Preliminaries}
 
-% TODO: Talk about mixed interger linear programming
+% TODO: Talk about mixed integer linear programming
 
 % TODO: Talk about logical consequences (mention proof by contradiction on outputting the class)
 
@@ -68,6 +70,35 @@ We represent a dataset by a set of constraints of type $x_i = c_i$, to indicate 
 % QUESTION: Is it really a set of constraints?
 
 % TODO: Talk about neural network notations
+
+\tikzset{
+	layer/.style={matrix of nodes, row sep=0.5cm, nodes=neuron},
+	neuron/.style={circle, draw}
+}
+
+\begin{tikzpicture}
+
+	\matrix[layer]
+	{
+		% First layer
+		\node[neuron] (x11) {$x_1^1$} & \node[neuron] (x12) {$x_1^2$}; \\
+		\node[neuron] (x21) {$x_2^1$} & \node[neuron] (x22) {$x_2^2$}; \\
+		\node[neuron] (x31) {$x_3^1$} & \node[neuron] (x32) {$x_3^2$}; \\
+		\node[neuron] (x41) {$x_4^1$} & \node[neuron] (x42) {$x_4^2$}; \\
+		\node[neuron] (x51) {$x_5^1$}; \\
+	};
+\end{tikzpicture}
+
+% \begin{tikzpicture}
+% 	[every node/.style={draw=black,anchor=base,font=\huge}]
+
+% 	\matrix [draw=red]
+% 	{
+% 	  \node {a}; \fill[blue] (0,0) circle (2pt); &
+% 	  \node {X}; \fill[blue] (0,0) circle (2pt); &
+% 	  \node {g}; \fill[blue] (0,0) circle (2pt); \\
+% 	};
+%   \end{tikzpicture}
 
 
 \section{Improving Minimal Explanations}
