@@ -177,38 +177,66 @@ M = \{0.14 \le x_1 \le 0.92,
 
 % TODO: Put the example of the sliced square (2 inputs; 2 classes; one line dividing the square, defining the class boundaries; select a point and walk until you hit the line and notice how first walking vertically or horizontally changes the results)
 
+\tikzset{
+	axis/.style={black, thick, ->, >=stealth},
+	rectangle/.style={draw=black!75, fill=gray!50, thick},
+	line/.style={black, thick},
+}
+
+\def\margin{0.1}
+\def\ymin{-\margin}
+\def\ymax{1}
+\def\xmin{-\margin}
+\def\xmax{1}
+
+\newcommand{\drawAxes}{
+	\draw[axis] (0, \ymin) -- (0, \ymax + \margin) node[above] {$x_2$};
+	\draw[axis] (\xmin, 0) -- (\xmax + \margin, 0) node[right] {$x_1$};
+}
+
+\def\rectHeight{0.75}
+\def\rectLength{1}
+
+\newcommand{\drawRectangle}{
+	\filldraw[rectangle] (0, 0) rectangle (\rectLength, \rectHeight);
+}
+
+\newcommand{\drawBoundary}{
+	\draw[line] plot ({\x}, {\rectHeight - \x});
+}
+
+\newcommand{\drawPoint}[2]{
+	\filldraw[black!80] #1 circle (0.5pt) node[above] {#2};
+}
+
 \begin{tikzpicture}[scale=5, domain=-0.1:1.1]
-	\newcommand{\offset}{0.1}
-	\newcommand{\xmin}{-\offset}
-	\newcommand{\ymin}{-\offset}
-	\newcommand{\xmax}{1.1}
-	\newcommand{\ymax}{1}
-
-	% Axes
-	\draw[black, thick, ->] (0, \ymin) -- (0, \ymax + \offset) node[above] {$x_2$};
-	\draw[black, thick, ->] (\xmin, 0) -- (\xmax + \offset, 0) node[right] {$x_1$};
-
-	% Rectangle
-	\newcommand{\recty}{0.75}
-	\newcommand{\rectx}{1}
-	\filldraw[draw=black!75, fill=gray!50, thick] (0, 0) rectangle (\rectx, \recty);
-
-	% Boundary
-	\draw[black, thick, variable=\x, domain=\xmin:\recty+\offset] plot ({\x}, {0.75 - \x});
+	\drawAxes
+	\clip (\xmin, \ymin) rectangle (\xmax, \ymax);
+	\drawRectangle
+	\drawBoundary
 
 	% Colors
-	\coordinate (A) at (\xmin, \recty + \offset);  % Top left, line r
-	\coordinate (B) at (\recty + \offset, \ymin);  % Bottom right, line r
+	\coordinate (A) at (\xmin, \rectHeight + \margin);  % Top left, line r
+	\coordinate (B) at (\rectHeight + \margin, \ymin);  % Bottom right, line r
 	\fill[opacity=0.25, color=orange] (\xmin, \ymin) -- (A) -- (B) -- cycle;
-	\fill[opacity=0.25, color=blue] (A) -- (\rectx + \offset, \recty + \offset) -- (\rectx + \offset, \ymin) --  (B) -- cycle;
+	\fill[opacity=0.25, color=blue] (A) -- (\rectLength + \margin, \rectHeight + \margin) -- (\rectLength + \margin, \ymin) --  (B) -- cycle;
 
-	% Point
-	\newcommand{\Xx}{0.8}
-	\newcommand{\Xy}{0.5}
-	\filldraw[black!80] (\Xx, \Xy) circle (0.5pt) node[above] {$\vb{X}$};
+	% \begin{scope}
+	% 	\clip (0, 0) rectangle (\rectLength,\rectHeight);
 
-	% Dashed lines
-	\draw[black!75, dashed, <->] (\recty - \Xy, \Xy) -- (\rectx, \Xy);
+	% 	% \draw[fill=blue!30] (0, 0) rectangle (\rectLength,\rectHeight);
+	% 	\drawRectangle
+	% 	\draw[orange, thick, domain=0:\rectLength] plot (\x,{-\x});
+	% 	\draw[fill=orange!30] (0, 0) -- plot (\x, {\rectHeight -\x}) -- (\rectLength, 0) -- cycle;
+	% \end{scope}
+
+	\def\X{(0.8, 0.5)}
+	\drawPoint{\X}{$\vb{X}$}
+
+	% % Dashed lines
+	% \draw[black!75, dashed, <->] (\rectHeight - \Xy, \Xy) -- (\rectLength, \Xy);
+	\coordinate (XRect) at \X -| (\rectLength, 0);
+	\coordinate (LineX) at \X -| (0, 0);
 \end{tikzpicture}
 
 
