@@ -72,33 +72,58 @@ We represent a dataset by a set of constraints of type $x_i = c_i$, to indicate 
 % TODO: Talk about neural network notations
 
 \tikzset{
-	layer/.style={matrix of nodes, row sep=0.5cm, nodes=neuron},
-	neuron/.style={circle, draw}
+	neuron/.style={draw, circle, row sep=0.5cm},
+	layer/.style={matrix of nodes, nodes=neuron},
+	arrow/.style={->, gray}
 }
 
 \begin{tikzpicture}
-
-	\matrix[layer]
-	{
-		% First layer
-		\node[neuron] (x11) {$x_1^1$} & \node[neuron] (x12) {$x_1^2$}; \\
-		\node[neuron] (x21) {$x_2^1$} & \node[neuron] (x22) {$x_2^2$}; \\
-		\node[neuron] (x31) {$x_3^1$} & \node[neuron] (x32) {$x_3^2$}; \\
-		\node[neuron] (x41) {$x_4^1$} & \node[neuron] (x42) {$x_4^2$}; \\
-		\node[neuron] (x51) {$x_5^1$}; \\
+	\matrix[layer, label=$L_0$] (input) {
+		$x_1$ \\
+		$x_2$ \\
+		$x_3$ \\
+		$x_4$ \\
+		$x_5$ \\
 	};
+
+	\matrix[layer, label=$L_1$, right=of input] (hidden 1) {
+		$x_1^1$ \\
+		$x_2^1$ \\
+		$x_3^1$ \\
+		$x_4^1$ \\
+	};
+
+	\matrix[layer, label=$L_2$, right=of hidden 1] (hidden 2) {
+		$x_1^2$ \\
+		$x_2^2$ \\
+		$x_3^2$ \\
+		$x_4^2$ \\
+	};
+
+	\matrix[layer, label=$L_3$, right=of hidden 2] (output) {
+		$o_1$ \\
+		$o_2$ \\
+		$o_3$ \\
+	};
+
+	\foreach \i in {1, ..., 5} {
+		\foreach \j in {1, ..., 4} {
+			\draw[arrow] (input-\i-1) -- (hidden 1-\j-1);
+		}
+	}
+
+	\foreach \i in {1, ..., 4} {
+		\foreach \j in {1, ..., 4} {
+			\draw[arrow] (hidden 1-\i-1) -- (hidden 2-\j-1);
+		}
+	}
+
+	\foreach \i in {1, ..., 4} {
+		\foreach \j in {1, 2, 3} {
+			\draw[arrow] (hidden 2-\i-1) -- (output-\j-1);
+		}
+	}
 \end{tikzpicture}
-
-% \begin{tikzpicture}
-% 	[every node/.style={draw=black,anchor=base,font=\huge}]
-
-% 	\matrix [draw=red]
-% 	{
-% 	  \node {a}; \fill[blue] (0,0) circle (2pt); &
-% 	  \node {X}; \fill[blue] (0,0) circle (2pt); &
-% 	  \node {g}; \fill[blue] (0,0) circle (2pt); \\
-% 	};
-%   \end{tikzpicture}
 
 
 \section{Improving Minimal Explanations}
