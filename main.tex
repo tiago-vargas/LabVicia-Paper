@@ -239,8 +239,6 @@ M = \{0.14 \le x_1 \le 0.92,
 
 	% Dashed lines
 	\draw[movement range] (\rectHeight - \Xy, \Xy) -- (\rectLength, \Xy);
-	% \coordinate (XRect) at \X -| (\rectLength, 0);
-	% \coordinate (LineX) at \X -| (0, 0);
 \end{tikzpicture}
 
 \begin{tikzpicture}[figure]
@@ -265,9 +263,7 @@ M = \{0.14 \le x_1 \le 0.92,
 	% Horizontal dashed line
 	\draw[movement range] (\rectHeight - \Xy, \Xy) -- (\rectLength, \Xy);
 	% Vertical dashed line
-	\draw[movement range] (\Xx, \Xy) -- (\Xx, \rectHeight);
-	% \coordinate (XRect) at \X -| (\rectLength, 0);
-	% \coordinate (LineX) at \X -| (0, 0);
+	\draw[movement range, ->] (\Xx, \Xy + 0.08) -- (\Xx, \rectHeight);
 
 	% X movement area
 	\fill[opacity=0.25, blue] (\rectHeight - \Xy, \Xy) rectangle (\rectLength, \rectHeight);
