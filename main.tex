@@ -211,6 +211,7 @@ M = \{0.14 \le x_1 \le 0.92,
 	\filldraw[black!80] #1 circle (0.5pt) node[above] {#2};
 }
 
+% Figure 1
 \begin{tikzpicture}[figure]
 	\drawAxes
 	\clip (\xmin, \ymin) rectangle (\xmax, \ymax);
@@ -257,19 +258,48 @@ M = \{0.14 \le x_1 \le 0.92,
 	\def\Xy{0.5}
 	\def\Xx{\rectHeight - \Xy}
 	\def\X{(\Xx, \Xy)}
-	\drawPoint{\X}{$\vb{x}$}
+	% \drawPoint{\X}{$\vb{x}$}
+	\filldraw[black!80] (\Xx, \Xy) circle (0.5pt) node[below left] {$\vb{x}$};
 
 	% % Dashed lines
 	% Horizontal dashed line
 	\draw[movement range] (\rectHeight - \Xy, \Xy) -- (\rectLength, \Xy);
 	% Vertical dashed line
-	\draw[movement range, ->] (\Xx, \Xy + 0.08) -- (\Xx, \rectHeight);
+	\draw[movement range] (\Xx, \Xy) -- (\Xx, \rectHeight);
 
 	% X movement area
 	\fill[opacity=0.25, blue] (\rectHeight - \Xy, \Xy) rectangle (\rectLength, \rectHeight);
 \end{tikzpicture}
 
 
+% Figure 2
+\begin{tikzpicture}[figure]
+	\drawAxes
+	\clip (\xmin, \ymin) rectangle (\xmax, \ymax);
+	\drawRectangle
+	\drawBoundary
+
+	% Colors
+	\coordinate (A) at (\xmin, \rectHeight + \margin);  % Top left, line r
+	\coordinate (B) at (\rectHeight + \margin, \ymin);  % Bottom right, line r
+	\fill[opacity=0.25, color=orange] (\xmin, \ymin) -- (A) -- (B) -- cycle;
+	\fill[opacity=0.25, color=blue] (A) -- (\rectLength + \margin, \rectHeight + \margin) -- (\rectLength + \margin, \ymin) --  (B) -- cycle;
+
+	% The Point
+	\def\Xx{0.8}
+	\def\Xy{0.5}
+	\def\X{(\Xx, \Xy)}
+	\drawPoint{\X}{$\vb{x}$}
+
+	\def\step{0.1}
+
+	% % Dashed lines
+	% Upper dashed line
+	\draw[movement range, ->] (\Xx, \Xy) -- ++(\step, 0) -- ++(0, \step) -- ++(\step, 0) -- (\rectLength, \rectHeight);
+
+	% X movement area
+	\fill[opacity=0.25, blue] (\Xx, \Xy) rectangle (\rectLength, \rectHeight);
+\end{tikzpicture}
 
 \begin{tikzpicture}[figure]
 	\drawAxes
@@ -293,10 +323,9 @@ M = \{0.14 \le x_1 \le 0.92,
 
 	% % Dashed lines
 	% Upper dashed line
-	\draw[movement range] (\Xx, \Xy) -- ++(\step, 0) -- ++(0, \step) -- ++(\step, 0) -- (\rectLength, \rectHeight);
-	% Bottom dashed line
-	% \draw[movement range] (\Xx, \Xy) -- ++(-\step, 0) -- ++(0, -\step) -- ++(-\step, 0) -- ++(0, -\step) -- ++(-\step, 0) -- ++(0, -\step / 2);
-	\draw[movement range] (\Xx, \Xy) -- ++(-\step, 0) -- ++(0, -\step) -- ++(-\step, 0) -- ++(0, -\step) -- ++(-\step, 0) -- (\Xx - 3*\step, \rectHeight - \Xx + 3*\step);
+	\draw[movement range, ->] (\Xx, \Xy) -- ++(\step, 0) -- ++(0, \step) -- ++(\step, 0) -- (\rectLength, \rectHeight);
+	% Lower dashed line
+	\draw[movement range, ->] (\Xx, \Xy) -- ++(-\step, 0) -- ++(0, -\step) -- ++(-\step, 0) -- ++(0, -\step) -- ++(-\step, 0) -- (\Xx - 3*\step, \rectHeight - \Xx + 3*\step);
 
 	% X movement area
 	\fill[opacity=0.25, blue] (\Xx - 3*\step, \rectHeight - \Xx + 3*\step) rectangle (\rectLength, \rectHeight);
