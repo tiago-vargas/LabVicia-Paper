@@ -157,7 +157,7 @@ M = \{0.14 \le x_1 \le 0.92,
 			\ForAll {$c \in M$}
 				\While {$M \cup F \models O$}
 					\State {$M' \gets M$}
-					\State {$c \texttt{.right\_hand\_side} \gets c \texttt{.right\_hand\_side} - \epsilon$}
+					\State {$c \texttt{.right\_hand\_side} \gets c \texttt{.right\_hand\_side} + \epsilon$}
 				\EndWhile
 				\State {$M \gets M'$}
 				\\
