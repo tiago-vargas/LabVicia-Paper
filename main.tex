@@ -12,6 +12,7 @@
 \usepackage{algpseudocode}
 \usepackage{algorithm}
 \usepackage{tikz}
+\usepackage{xcolor}
 
 \usetikzlibrary{positioning, matrix}
 
@@ -71,14 +72,20 @@ We represent a dataset by a set of constraints of type $x_i = c_i$, to indicate 
 
 % TODO: Talk about neural network notations
 
+\definecolor{apricot}{HTML}{FFCDB2}
+\definecolor{melon}{HTML}{FFB4A2}
+\definecolor{salmon pink}{HTML}{E5989B}
+\definecolor{old rose}{HTML}{B5838D}
+\definecolor{dim gray}{HTML}{6D6875}
+
 \tikzset{
 	neuron/.style={draw, circle, row sep=0.5cm},
 	layer/.style={matrix of nodes, nodes=neuron},
-	arrow/.style={->, gray}
+	arrow/.style={->, dim gray}
 }
 
 \begin{tikzpicture}
-	\matrix[layer, label=$L_0$] (input) {
+	\matrix[layer, label=$L_0$, nodes={fill=salmon pink}] (input) {
 		$x_1$ \\
 		$x_2$ \\
 		$x_3$ \\
@@ -86,26 +93,27 @@ We represent a dataset by a set of constraints of type $x_i = c_i$, to indicate 
 		$x_5$ \\
 	};
 
-	\matrix[layer, label=$L_1$, right=of input] (hidden 1) {
+	\matrix[layer, label=$L_1$, right=of input, nodes={fill=apricot}] (hidden 1) {
 		$x_1^1$ \\
 		$x_2^1$ \\
 		$x_3^1$ \\
 		$x_4^1$ \\
 	};
 
-	\matrix[layer, label=$L_2$, right=of hidden 1] (hidden 2) {
+	\matrix[layer, label=$L_2$, right=of hidden 1, nodes={fill=apricot}] (hidden 2) {
 		$x_1^2$ \\
 		$x_2^2$ \\
 		$x_3^2$ \\
 		$x_4^2$ \\
 	};
 
-	\matrix[layer, label=$L_3$, right=of hidden 2] (output) {
+	\matrix[layer, label=$L_3$, right=of hidden 2, nodes={fill=old rose}] (output) {
 		$o_1$ \\
 		$o_2$ \\
 		$o_3$ \\
 	};
 
+	% Connecting the neurons of neighbor layers
 	\foreach \i in {1, ..., 5} {
 		\foreach \j in {1, ..., 4} {
 			\draw[arrow] (input-\i-1) -- (hidden 1-\j-1);
