@@ -33,29 +33,21 @@
 \end{abstract}
 
 \section{Introduction}
-% TODO: Contextualize: talk about how machine learning models are being used as black box models, but justifications/reasons would be helpful.
 
-% Neural networks are widely used in many applications to try to ...
-% Citation
+Neural networks have become widely used in a variety of applications due to their ability to learn complex patterns from large amounts of data and make accurate predictions.
+However, neural network are usually black-box models, giving little insight into how they arrive at their predictions.
+This lack of transparency is problematic if the model's prediction contradicts the opinion of experts, because it is difficult to know if the model has identified a new pattern or simply has made a mistake.
+In cases where wrong decisions can lead to severe consequences, as in deciding to buy or sell stocks, it becomes particularly difficult to know in who to trust.
+By developing explainers for neural networks, experts can reason through the model's decision-making process and decide to either reject or accept its prediction more confidently.
 
-These models are usually black-box models, meaning they just output a prediction, given inputs, but do not explain how they come to a prediction.
-This is problematic if the model makes a prediction that goes against what would be predicted by experts because we do not know if the model considered something the experts did not or the other way around.
-As a consequence, if it was a high-stake prediction, we do not know who to trust.
-If the model was able to explain how it came to that prediction, the experts could reason through it and decide whether to accept it or reject it.
-This is the motivation for developing explainers for neural networks.
-
-% QUESTION: Should I give an example of high-stake prediction?
-
-% An explanation...
-
-There are neural network explainers that work with the concept of \emph{minimal explanation}, which is a set of which features that contributed to the prediction, along with their values.
-We attempt to improve minimal explanations by identifying the \emph{range} of values a feature can have, instead of the just value it assumed in the input.
+There are neural network explainers that work with the concept of \emph{minimal explanation}, which is a set of which features and their corresponding values that contributed to the model's prediction.
+We aim to improve minimal explanations by identifying the \emph{range} of values that a feature can take, rather than just value it assumes in the input.
 
 % TODO: Talk about logic-based explainers
 
-Most approaches for obtaining neural network explanations are based on heuristic methods, thus they do not guarantee correctness.
-Well known examples are LIME \cite{ribeiro2016should}, Anchors \cite{Ribeiro_Singh_Guestrin_2018} and SHAP \cite{lundberg2017unified}.
-These heuristic approaches do not consider all feature space. Therefore explanations provided by these methods may be incorrect, i.e. there may be inputs for which the classification and the explainer diverge.
+Most approaches for obtaining neural network explanations are based on heuristic methods, which means they do not guarantee correctness.
+Well-known examples are LIME \cite{ribeiro2016should}, Anchors \cite{Ribeiro_Singh_Guestrin_2018} and SHAP \cite{lundberg2017unified}.
+These heuristic approaches do not consider the entire feature space, and as a result, the explanations provided by these methods may be incorrect. In other words, there may be inputs for which the classification and the explainer disagree.
 % Feature space | input space | [possible] inputs
 
 
