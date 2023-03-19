@@ -296,15 +296,6 @@ And finally, we move to $x_4$, where we can't step at all:
 	\fill[opacity=0.25, color=orange] (\xmin, \ymin) -- (A) -- (B) -- cycle;
 	\fill[opacity=0.25, color=blue] (A) -- (\rectLength + \margin, \rectHeight + \margin) -- (\rectLength + \margin, \ymin) --  (B) -- cycle;
 
-	% \begin{scope}
-	% 	\clip (0, 0) rectangle (\rectLength,\rectHeight);
-
-	% 	% \draw[fill=blue!30] (0, 0) rectangle (\rectLength,\rectHeight);
-	% 	\drawRectangle
-	% 	\draw[orange, thick, domain=0:\rectLength] plot (\x,{-\x});
-	% 	\draw[fill=orange!30] (0, 0) -- plot (\x, {\rectHeight -\x}) -- (\rectLength, 0) -- cycle;
-	% \end{scope}
-
 	\def\Xx{0.8}
 	\def\Xy{0.5}
 	\def\X{(\Xx, \Xy)}
