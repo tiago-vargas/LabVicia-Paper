@@ -64,13 +64,13 @@ We represent a dataset by a set of constraints of type $x_i = c_i$, to indicate 
 
 % TODO: Talk about neural network notations
 
-Neural networks are a set of neurons stacked into layers.
-Each neuron from one layer is connected to every neuron from the next layer.
-Each neuron holds a value.
+Neural networks are composed of layers of interconnected neurons, where each neuron holds a value and each connection has a weight.
+The neurons in one layer are connected to every neuron in the next layer.
+We can think of a neuron as a function that takes the values of all the neurons in the previous layer and generates a value.
 
-% The idea is that given a pattern of values of the neurons from the first layer, the network outputs a pattern of values in the neurons from the last layer.
+Neurons can either be active or inactive. In this paper
 
-We can think of a neuron as a function that takes the values of every other neurons in the previous layer and spits out a number.
+% The idea is that given a pattern of values of the neurons in the first layer, the network outputs a pattern of values in the neurons in the last layer.
 
 The bias tells us how high the weighted sum needs to be before the neuron starts getting meaningfully active.
 
