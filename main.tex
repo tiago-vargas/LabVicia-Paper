@@ -35,13 +35,10 @@
 \section{Introduction}
 
 Neural networks have become widely used in a variety of applications due to their ability to learn complex patterns from large amounts of data and make accurate predictions.
-However, neural network are usually black-box models, giving little insight into how they arrive at their predictions.
+However, neural networks are usually black-box models, giving little insight into how they arrive at their predictions.
 This lack of transparency is problematic if the model's prediction contradicts the opinion of experts, because it is difficult to know if the model has identified a new pattern or simply has made a mistake.
-In cases where wrong decisions can lead to severe consequences, as in deciding to buy or sell stocks, it becomes particularly difficult to know in who to trust.
-By developing explainers for neural networks, experts can reason through the model's decision-making process and decide to either reject or accept its prediction more confidently.
-
-There are neural network explainers that work with the concept of \emph{minimal explanation}, which is a set of which features and their corresponding values that contributed to the model's prediction.
-We aim to improve minimal explanations by identifying the \emph{range} of values that a feature can take, rather than just value it assumes in the input.
+In cases where wrong decisions can lead to severe consequences, as in deciding to buy or sell stocks, it becomes particularly difficult to know who to trust.
+By developing explainers for neural networks, experts can reason through the decision-making process of the model and decide to either reject or accept its prediction more confidently.
 
 % TODO: Talk about logic-based explainers
 
@@ -49,6 +46,9 @@ Most approaches for obtaining neural network explanations are based on heuristic
 Well-known examples are LIME \cite{ribeiro2016should}, Anchors \cite{Ribeiro_Singh_Guestrin_2018} and SHAP \cite{lundberg2017unified}.
 These heuristic approaches do not consider the entire feature space, and as a result, the explanations provided by these methods may be incorrect. In other words, there may be inputs for which the classification and the explainer disagree.
 % Feature space | input space | [possible] inputs
+
+There are neural network explainers that work with the concept of \emph{minimal explanation}, which is a set of which features and their corresponding values that contributed to the model's prediction.
+We aim to improve minimal explanations by identifying the \emph{range} of values that a feature can take, rather than just the value it assumes in the input.
 
 
 \section{Preliminaries}
@@ -136,9 +136,9 @@ The bias tells us how high the weighted sum needs to be before the neuron starts
 \end{tikzpicture}
 
 \begin{align*}
-	x_1^{(1)} &= \sigma(w_{1,1} x_1^{(0)} + w_{1,2} x_2^{(0)} + w_{1,3} x_3^{(0)} + w_{1,4} x_4^{(0)} + b_1^{(0)}) \\
-	          &= \sigma(\sum_{i=1}^{4}{w_{1,i} x_i^{(0)}} + b_1^{(0)}) \\
-	\vb{x}^{(1)} &= \sigma(\vb{W}\vb{x}^{(0)} + \vb{b}^{(0)})
+	x_1^{(1)} &= \sigma(w_{1,1}^{(1)} x_1^{(0)} + w_{1,2}^{(1)} x_2^{(0)} + w_{1,3}^{(1)} x_3^{(0)} + w_{1,4}^{(1)} x_4^{(0)} + b_1^{(0)}) \\
+	          &= \sigma(\sum_{i=1}^{4}{w_{1,i}^{(1)} x_i^{(0)}} + b_1^{(0)}) \\
+	\vb{x}^{(1)} &= \sigma(\vb{W}^{(1)}\vb{x}^{(0)} + \vb{b}^{(0)})
 \end{align*}
 
 
@@ -398,6 +398,12 @@ And finally, we move to $x_4$, where we can't step at all:
 
 
 \section{Experiments}
+
+% TODO: Fazer tabela com...
+% - Tempo Anchors V Alg1 V Alg2
+% - "Volume" | "Cobertura" da explicação
+% - Médias dos tamanhos da ranges
+% - Número de features não generalizadas
 
 % TODO: Talk about that dataset $\{A \ge 0.5 \implies 1\}$ and mention how `anchor` fails to find the boundary (0.5)
 
