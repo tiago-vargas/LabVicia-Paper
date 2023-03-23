@@ -162,19 +162,18 @@ We are now interested in discovering which range of values for the features $x_1
 
 The approach is to see if the output is still the same after walking at steps of $\epsilon$ at the vicinity of the point.
 To achieve this, we iterate over $M$, treating the current constraint of type $x = c$ as $c \le x \le c$.
-Then we update that constraint to be $c \le x \le c + \epsilon$, and check if this updated $M$ still guarantees the class $C_2$.
+We then expand the range of the constraint to include values in the vicinity to the right of $c$ by updating it to be $c \le x \le c + \epsilon$, and check if this updated $M$ still guarantees the class $C_2$.
 We keep incrementing $\epsilon$ to the right-hand side of the constraint until we cannot guarantee the output class to remain the same, in which case the previous value is the upper end of the interval for feature $x$.
-After that, we do the same for the other side of the constraint, but decrementing at steps of $\epsilon$, until we find the lower end for $x$.
+After that, we do an analogous procedure for the left side of the constraint, but decrementing at steps of $\epsilon$, until we find the lower end for $x$.
 In the case no steps can be taken at all, we keep the constraint as $x = c$.
-In the case we step further than a bound of $x$, we cap the range at that bound.
+In the case we reach a value outside the domain of $x$, we limit the constraint to include values up to that boundary.
 % TODO: [on the last sentence] Explain better that we cap the range **after** checking the output out
 
 We expect the improved explanation to be a set of constraints that describe the range of each feature in the minimal explanation, such as $c - k_{-} \cdot \epsilon \le x \le c + k_{+} \cdot \epsilon$, where $k_{-}$ is the number of steps taken to the left, and $k_{+}$ is the number of steps taken to the right.
 
 We provide an algorithm for improving a minimal explanation below. The line $M' \gets M$ means that $M'$ is a \emph{deep copy} of $M$.
 
-In the context of the previous example, suppose we aim to stretch the interval for $x_1$, first finding the upper end $0.92$, after arbitrarily setting $\epsilon = 0.1$:
-% _For_ $x4 or _of_ $x$?
+In the context of the previous example, suppose we aim to stretch the interval for $x_1$, first finding the upper end $0.92$, after choosing a step size of $\epsilon = 0.1$:
 
 \[
 	M = \{0.89 \le x_1 \le 0.92,
